@@ -75,7 +75,7 @@
 
   </Target>
 
-  <Target Name="GenerateBundledVersionsProps" DependsOnTargets="SetupBundledComponents">
+  <Target Name="GenerateBundledVersionsProps">
     <PropertyGroup>
       <BundledVersionsPropsFileName>Microsoft.NETCoreSdk.BundledVersions.props</BundledVersionsPropsFileName>
     </PropertyGroup>
@@ -421,10 +421,12 @@
         linux-x64;
         linux-arm;
         linux-arm64;
+        linux-loongarch64;
         linux-bionic-arm;
         linux-musl-x64;
         linux-musl-arm;
         linux-musl-arm64;
+        linux-musl-loongarch64;
         win-x64;
         win-x86;
         win-arm64;
@@ -432,7 +434,11 @@
         wasi-wasm;
         " />
 
-      <NativeAOTRuntimePackRids Include="@(Net90NativeAOTRuntimePackRids)" />
+      <NativeAOTRuntimePackRids Include="
+        @(Net90NativeAOTRuntimePackRids);
+        linux-riscv64;
+        linux-musl-riscv64;
+        "/>
 
       <AspNetCore31RuntimePackRids Include="@(AspNetCore30RuntimePackRids)" />
       <AspNetCore50RuntimePackRids Include="@(AspNetCore31RuntimePackRids);linux-musl-arm;win-arm64" />
@@ -666,7 +672,7 @@ Copyright (c) .NET Foundation. All rights reserved.
     <KnownFrameworkReference Include="Microsoft.NETCore.App"
                               TargetFramework="net9.0"
                               RuntimeFrameworkName="Microsoft.NETCore.App"
-                              DefaultRuntimeFrameworkVersion="$(_NET90RuntimePackVersion)"
+                              DefaultRuntimeFrameworkVersion="9.0.0"
                               LatestRuntimeFrameworkVersion="$(_NET90RuntimePackVersion)"
                               TargetingPackName="Microsoft.NETCore.App.Ref"
                               TargetingPackVersion="$(_NET90TargetingPackVersion)"
@@ -725,7 +731,7 @@ Copyright (c) .NET Foundation. All rights reserved.
     <KnownFrameworkReference Include="Microsoft.WindowsDesktop.App"
                               TargetFramework="net9.0"
                               RuntimeFrameworkName="Microsoft.WindowsDesktop.App"
-                              DefaultRuntimeFrameworkVersion="$(_WindowsDesktop90RuntimePackVersion)"
+                              DefaultRuntimeFrameworkVersion="9.0.0"
                               LatestRuntimeFrameworkVersion="$(_WindowsDesktop90RuntimePackVersion)"
                               TargetingPackName="Microsoft.WindowsDesktop.App.Ref"
                               TargetingPackVersion="$(_WindowsDesktop90TargetingPackVersion)"
@@ -737,7 +743,7 @@ Copyright (c) .NET Foundation. All rights reserved.
     <KnownFrameworkReference Include="Microsoft.WindowsDesktop.App.WPF"
                               TargetFramework="net9.0"
                               RuntimeFrameworkName="Microsoft.WindowsDesktop.App"
-                              DefaultRuntimeFrameworkVersion="$(_WindowsDesktop90RuntimePackVersion)"
+                              DefaultRuntimeFrameworkVersion="9.0.0"
                               LatestRuntimeFrameworkVersion="$(_WindowsDesktop90RuntimePackVersion)"
                               TargetingPackName="Microsoft.WindowsDesktop.App.Ref"
                               TargetingPackVersion="$(_WindowsDesktop90TargetingPackVersion)"
@@ -750,7 +756,7 @@ Copyright (c) .NET Foundation. All rights reserved.
     <KnownFrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms"
                               TargetFramework="net9.0"
                               RuntimeFrameworkName="Microsoft.WindowsDesktop.App"
-                              DefaultRuntimeFrameworkVersion="$(_WindowsDesktop90RuntimePackVersion)"
+                              DefaultRuntimeFrameworkVersion="9.0.0"
                               LatestRuntimeFrameworkVersion="$(_WindowsDesktop90RuntimePackVersion)"
                               TargetingPackName="Microsoft.WindowsDesktop.App.Ref"
                               TargetingPackVersion="$(_WindowsDesktop90TargetingPackVersion)"
@@ -763,7 +769,7 @@ Copyright (c) .NET Foundation. All rights reserved.
     <KnownFrameworkReference Include="Microsoft.AspNetCore.App"
                               TargetFramework="net9.0"
                               RuntimeFrameworkName="Microsoft.AspNetCore.App"
-                              DefaultRuntimeFrameworkVersion="$(_AspNet90RuntimePackVersion)"
+                              DefaultRuntimeFrameworkVersion="9.0.0"
                               LatestRuntimeFrameworkVersion="$(_AspNet90RuntimePackVersion)"
                               TargetingPackName="Microsoft.AspNetCore.App.Ref"
                               TargetingPackVersion="$(_AspNet90TargetingPackVersion)"
@@ -1348,7 +1354,7 @@ Copyright (c) .NET Foundation. All rights reserved.
                       Overwrite="true" />
   </Target>
 
-  <Target Name="GenerateBundledCliToolsProps" DependsOnTargets="SetupBundledComponents">
+  <Target Name="GenerateBundledCliToolsProps">
     <PropertyGroup>
       <BundledBundledCliToolsPropsFileName>Microsoft.NETCoreSdk.BundledCliTools.props</BundledBundledCliToolsPropsFileName>
     </PropertyGroup>
@@ -1383,7 +1389,7 @@ Copyright (c) .NET Foundation. All rights reserved.
                       Overwrite="true" />
   </Target>
 
-  <Target Name="GenerateBundledMSBuildProps" DependsOnTargets="SetupBundledComponents">
+  <Target Name="GenerateBundledMSBuildProps">
     <PropertyGroup>
       <MinimumMSBuildVersionFile>$(RedistLayoutPath)sdk/$(Version)/minimumMSBuildVersion</MinimumMSBuildVersionFile>
       <BundledMSBuildPropsFileName>Microsoft.NETCoreSdk.BundledMSBuildInformation.props</BundledMSBuildPropsFileName>
