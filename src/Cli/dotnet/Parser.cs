@@ -42,6 +42,7 @@ namespace Microsoft.DotNet.Cli
             PackageCommandParser.GetCommand(),
             ParseCommandParser.GetCommand(),
             PublishCommandParser.GetCommand(),
+            ReferenceCommandParser.GetCommand(),
             RemoveCommandParser.GetCommand(),
             RestoreCommandParser.GetCommand(),
             RunCommandParser.GetCommand(),
@@ -53,18 +54,31 @@ namespace Microsoft.DotNet.Cli
             HelpCommandParser.GetCommand(),
             SdkCommandParser.GetCommand(),
             InstallSuccessCommand,
-            WorkloadCommandParser.GetCommand()
+            WorkloadCommandParser.GetCommand(),
+            new System.CommandLine.StaticCompletions.CompletionsCommand()
         };
 
         public static readonly CliOption<bool> DiagOption = CommonOptionsFactory.CreateDiagnosticsOption(recursive: false);
 
-        public static readonly CliOption<bool> VersionOption = new("--version");
+        public static readonly CliOption<bool> VersionOption = new("--version")
+        {
+            Arity = ArgumentArity.Zero,
+        };
 
-        public static readonly CliOption<bool> InfoOption = new("--info");
+        public static readonly CliOption<bool> InfoOption = new("--info")
+        {
+            Arity = ArgumentArity.Zero,
+        };
 
-        public static readonly CliOption<bool> ListSdksOption = new("--list-sdks");
+        public static readonly CliOption<bool> ListSdksOption = new("--list-sdks")
+        {
+            Arity = ArgumentArity.Zero,
+        };
 
-        public static readonly CliOption<bool> ListRuntimesOption = new("--list-runtimes");
+        public static readonly CliOption<bool> ListRuntimesOption = new("--list-runtimes")
+        {
+            Arity = ArgumentArity.Zero,
+        };
 
         // Argument
         public static readonly CliArgument<string> DotnetSubCommand = new("subcommand") { Arity = ArgumentArity.ZeroOrOne, Hidden = true };
@@ -335,7 +349,7 @@ namespace Microsoft.DotNet.Cli
                     else if (command.Name.Equals(AddPackageParser.GetCommand().Name) || command.Name.Equals(AddCommandParser.GetCommand().Name))
                     {
                         // Don't show package completions in help
-                        AddPackageParser.CmdPackageArgument.CompletionSources.Clear();
+                        PackageAddCommandParser.CmdPackageArgument.CompletionSources.Clear();
                     }
 
                     base.Write(context);
